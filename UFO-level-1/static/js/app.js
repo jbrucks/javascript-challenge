@@ -4,14 +4,25 @@ var tableData = data;
 // reference to table body
 var tbody = d3.select("tbody");
 
-// bringing in data from data.js into index.html
-tableData.forEach(etSitings => {
+// bringing in data from data.js into index.  filteredData.forEach(function(etSitings) {
+  tableData.forEach(function(etSitings) {
     var row = tbody.append("tr");
-    Object.entries(etSitings).forEach(([key, value]) => {
+    Object.entries(etSitings).forEach(function([key, value]) {
+      console.log(key, value);
+      // Append a cell to the row for each value
+      // in the weather report object
       var cell = row.append("td");
       cell.text(value);
     });
   });
+
+// tableData.forEach(etSitings => {
+//     var row = tbody.append("tr");
+//     Object.entries(etSitings).forEach(([key, value]) => {
+//       var cell = row.append("td");
+//       cell.text(value);
+//     });
+//   });
 
 // Select the button
 var button = d3.select("#filter-btn");
@@ -35,18 +46,35 @@ function runEnter() {
   // Get the value property of the input element
   var inputValue = inputElement.property("value");
 
+  // Create filtering function
+  function filterByDate(date) {
+  return date.datetime == inputValue;
+  }
+
   // Filter data based on input
-  var filteredData = tableData.filter(etSitings.datetime === inputValue)
+  var filteredData = tableData.filter(filterByDate);
 
   // remove any children from the table
   tbody.html("")
 
-  // Update table data with data matching date input
-  filteredData.forEach(etSitings => {
+  filteredData.forEach(function(etSitings) {
     var row = tbody.append("tr");
-    Object.entries(etSitings).forEach(([key, value]) => {
+    Object.entries(etSitings).forEach(function([key, value]) {
+      console.log(key, value);
+      // Append a cell to the row for each value
+      // in the weather report object
       var cell = row.append("td");
       cell.text(value);
     });
   });
+
+  // // Update table data with data matching date input
+  // tableData.forEach(etSitings => {
+  //   var row = tbody.append("tr");
+  //   Object.entries(etSitings).forEach(([key, value]) => {
+  //     console.log(key, value);
+  //     var cell = row.append("td");
+  //     cell.text(value);
+  //   });
+  // });
 };
